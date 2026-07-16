@@ -1,7 +1,15 @@
 from fastapi import FastAPI
+from app.core.config import settings
 
-app=FastAPI()
+app=FastAPI(
+    title=settings.APP_NAME,
+    version=settings.APP_VERSION
+
+)
 
 @app.get("/")
 def root_a():
-    return "this is root application"
+    return {
+        "message":"welcome to DocuChat AI",
+        "debug":settings.DEBUG
+    }

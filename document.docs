@@ -1,0 +1,33 @@
+Project Setup ✅
+Configuration ✅
+Supabase PostgreSQL
+SQLAlchemy
+Alembic
+User Management
+Google OAuth + JWT Authentication
+PDF Management
+PDF Processing
+Embeddings
+FAISS (Vector Database)
+RAG Pipeline
+Chat Management
+Dashboard APIs
+Error Handling
+Testing
+React Frontend
+Full Stack Integration
+Deployment
+
+
+
+
+phase 1:
+create folder strture Frontend and backend 
+backend-->>backend folders and files
+
+phase 2:
+fastapi Setup and run in server
+
+
+phase 3:
+Configuration config file and .env file 
