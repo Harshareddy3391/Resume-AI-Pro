@@ -6,3 +6,23 @@ from app.core.config import settings #this is used for allowing access values fr
 engine=create_engine(settings.DATABASE_URL)
 
 
+SessionLocal=sessionmaker(
+                          autoflush=False,
+                          autocommit=False,
+                          bind=engine
+                          )   #session local is like convesation communicate database.
+
+
+class Base(DeclarativeBase):
+    pass
+
+def get_db():
+    db=SessionLocal()
+    try:
+        yield db
+
+    finally:
+        db.close()
+
+
+
