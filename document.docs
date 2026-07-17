@@ -53,3 +53,8 @@ almbic upgrate head
 phase 8:
 create Google cloud console account for oauth.
 create new project like .....done
+
+
+phase 9:
+updated env file and config file with google keys
+
