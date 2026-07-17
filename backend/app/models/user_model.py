@@ -1,6 +1,6 @@
-from sqlalchemy import Column,Integer,String
+from sqlalchemy import Column,Integer,String,DateTime
 from app.db.database import Base
-
+from sqlalchemy.sql import func
 
 class User(Base):
 
@@ -8,6 +8,15 @@ class User(Base):
 
 
     id=Column(Integer,primary_key=True,index=True)
-    username=Column(String(100),nullable=False)
+    google_id=Column(String(255),nullable=True,unique=True)
+    name=Column(String(100),nullable=False)
     email=Column(String(100),unique=True,nullable=False)
+    picture=Column(String(500),nullable=True)
+    created_at=Column(DateTime(timezone=True),server_default=func.now())
+
+    updated_at=Column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now()
+    )
     

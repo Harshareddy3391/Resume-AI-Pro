@@ -31,3 +31,19 @@ fastapi Setup and run in server
 
 phase 3:
 Configuration config file and .env file 
+
+
+phase 4:
+create project on supabase take URL and copy to .env file 
+we do work some on Alembic
+
+
+phase 5:
+create schema file User class with pydantic validation
+
+phase 6:
+create Database Engine connect between applicaton and PostgreSQL 
+
+create tables in models folder and also automatic created migration files
+
+phase 7: 
