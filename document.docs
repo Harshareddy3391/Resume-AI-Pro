@@ -47,3 +47,9 @@ create Database Engine connect between applicaton and PostgreSQL
 create tables in models folder and also automatic created migration files
 
 phase 7: 
+updated user_model file with new columns
+almbic upgrate head
+
+phase 8:
+create Google cloud console account for oauth.
+create new project like .....done
