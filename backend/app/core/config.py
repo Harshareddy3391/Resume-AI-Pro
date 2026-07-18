@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     # ==========================
     # Google OAuth
     # ==========================
-    GOOGLE_CLIENT:str
+    GOOGLE_CLIENT_ID:str
     GOOGLE_CLIENT_SECRET:str
     GOOGLE_REDIRECT_URL:str
 
