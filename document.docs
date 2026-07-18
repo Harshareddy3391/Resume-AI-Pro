@@ -58,3 +58,13 @@ create new project like .....done
 phase 9:
 updated env file and config file with google keys
 
+
+phase 10:
+updated jwt_auth file  with create jwt tocken and verify tocken
+ 
+
+update auth_schema file with googleuser class and tockenresponce 
+
+
+
+
