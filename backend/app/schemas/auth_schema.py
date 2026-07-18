@@ -11,4 +11,4 @@ class GoogleUser(BaseModel):
 
 class TockenResponce(BaseModel):
     access_tocken:str
-    tocken_type=str
+    tocken_type:str

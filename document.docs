@@ -66,5 +66,17 @@ updated jwt_auth file  with create jwt tocken and verify tocken
 update auth_schema file with googleuser class and tockenresponce 
 
 
+phase 11:
+updated auth file in api floder api buid for google auth and login
+
+
+again main file updaed with import auth file and write like include router(router)
+
+✅ auth_service.py
+✅ auth.py (OAuth setup + login endpoint)
+
+
+
+
 
 
