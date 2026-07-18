@@ -1,29 +1,54 @@
-from datetime import datetime,timedelta,timezone
+from datetime import datetime,timezone,timedelta
+from typing import Any
+from jose import jwt,JWTError
 
-from jose import jwt
 from app.core.config import settings
 
 
-def create_access_tocken(data:dict):
-    "create a jwt acces tocken"
 
-    # Create a copy of the payload
+
+
+def create_access_tocken(data:dict[str,Any])->str:
+    """
+    Create a JWT access tocken
+    """
+
+
+    #copy of the pay load or clims
     to_encode=data.copy()
 
-
-
-    #set the tocken expire time
+    #Tocken Expire tocken time
     expire=datetime.now(timezone.utc)+timedelta(minutes=settings.ACCESS_TOCKEN_EXPIRE_MINUTES)
 
 
-    #add expiration time to payload
+    #add expire time to pay load
     to_encode.update({"exp":expire})
 
+    #genarate jwt tocke
 
-    #Encode the Jwt
-    tocken=jwt.encode(
-        to_encode,
-        settings.JWT_SECRET_KEY
+    access_tocken=jwt.encode(
+        to_encode,settings.JWT_SECRET_KEY,
+        algorithm=settings.JWT_ALGORITHM
+
     )
 
-    return tocken
+
+    return access_tocken
+
+
+
+def verify_access_tocken(tocken:str)->dict[str,Any] | None:
+    """
+    Verify and decode jwt tocken
+    """
+    try:
+        payload=jwt.decode(
+            tocken,
+            settings.ACCESS_TOCKEN_EXPIRE_MINUTES,
+            algorithms=settings.JWT_ALGORITHM
+        )
+
+        return payload
+
+    except JWTError:
+        return None 
