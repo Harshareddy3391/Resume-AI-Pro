@@ -1,6 +1,7 @@
 from sqlalchemy import Column,Integer,String,DateTime
 from app.db.database import Base
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
 
 class User(Base):
 
@@ -20,3 +21,9 @@ class User(Base):
         onupdate=func.now()
     )
     
+
+    documents=relationship(
+        "Document",
+        back_populates="user",
+        cascade="all, delete-orphan"
+    )

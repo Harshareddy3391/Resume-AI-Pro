@@ -1,6 +1,10 @@
 from logging.config import fileConfig
 from app.models.user_model import User  #partally added.
 
+
+from app.models.document_model import Document
+from app.models.user_model import User
+
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from app.core.config import settings
