@@ -76,6 +76,10 @@ again main file updaed with import auth file and write like include router(route
 ✅ auth.py (OAuth setup + login endpoint)
 
 
+phase 12:
+update dependices jwt authntication.
+
+
 
 
 

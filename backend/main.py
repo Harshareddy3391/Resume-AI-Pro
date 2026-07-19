@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from starlette.middleware.sessions import SessionMiddleware
 from app.core.config import settings
-from app.api.auth import router
-
+from app.api.auth import router as auth_router
+from app.api.user import router as user_router
 app=FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION,
@@ -18,7 +18,8 @@ app.add_middleware(
 )
 
 #include router
-app.include_router(router)
+app.include_router(auth_router)
+app.include_router(user_router)
 @app.get("/")
 def root():
     return {
