@@ -17,13 +17,29 @@ def upload_pdf(file:UploadFile,user_id:int)->dict:
     """
 
     #validate PDF
-
+    if file.content_type != "application/pdf":
+        raise ValueError("Only PDF files are allowed.")
+    
+    #Get file extension
+    
     file_extension=file.filename.split(".")[-1]
 
+
+    #generate unique file name
     unique_filename=f"{uuid.uuid4()}.{file_extension}"
 
+
+
+    # Example: 5/550e8400-e29b-41d4-a716-446655440000.pdf
+    storage_path=f"{user_id}/{unique_filename}"
+
+
+
+    #Read file bytes
     file_bytes=file.file.read()
 
+
+    #Upload to supabase storage
     supabase.storage.from_(settings.SUPABASE_BUCKET).upload(
         path=storage_path,
         file=file_bytes,
