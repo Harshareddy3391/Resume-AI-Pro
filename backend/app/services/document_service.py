@@ -1,93 +1,95 @@
-from fastapi import HTTPException,UploadFile,status
-
-from sqlalchemy.orm import Session 
+from fastapi import HTTPException, UploadFile, status
+from sqlalchemy.orm import Session
 
 from app.models.document_model import Document
 from app.models.user_model import User
 
-
-from app.services.service_storage import (UploadFile,delete_pdf)
-
-
+from app.services.storage_service import (
+    upload_pdf,
+    delete_pdf
+)
 
 
 def create_document(
-        db:Session,file:UploadFile,current_user:User
-
+    db: Session,
+    file: UploadFile,
+    current_user: User
 ):
-    
     """
-    Upload PDF to supabase storage and save documet metadata in postgreSQL.
+    Upload PDF to Supabase Storage and save document metadata in PostgreSQL.
     """
 
-    #Upload file to supabase storage
-    uploaded_file=UploadFile(file=file,user_id=current_user.id)
+    # Upload file to Supabase Storage
+    uploaded_file = upload_pdf(
+        file=file,
+        user_id=current_user.id
+    )
 
-
-    #create document obj
-    document=Document(
+    # Create document object
+    document = Document(
         filename=uploaded_file["filename"],
         storage_path=uploaded_file["storage_path"],
         file_size=uploaded_file["file_size"],
         user_id=current_user.id
     )
 
-
-
-    #save to database
+    # Save to database
     db.add(document)
     db.commit()
     db.refresh(document)
 
-
     return document
 
-def get_user_document(
-        db:Session,
-        current_user:User
+
+def get_user_documents(
+    db: Session,
+    current_user: User
 ):
-    
     """
     Return all documents uploaded by the current user.
     """
 
-    documents=(
+    documents = (
         db.query(Document)
         .filter(Document.user_id == current_user.id)
-        .order_by(Document.uploaded_at.desc).all()
+        .order_by(Document.uploaded_at.desc())
+        .all()
     )
-
 
     return documents
 
+
 def delete_document(
-        db:Session,
-        document_id:int,
-        current_user:User
+    db: Session,
+    document_id: int,
+    current_user: User
 ):
-    
     """
-    Delete document from supabase storage and remove metadata from postgresql.
+    Delete document from Supabase Storage and remove metadata from PostgreSQL.
     """
 
-    document=(
-        db.query(Document).filter(Document.id == document.id,Document.user_id == current_user.id).first()
+    document = (
+        db.query(Document)
+        .filter(
+            Document.id == document_id,
+            Document.user_id == current_user.id
+        )
+        .first()
     )
 
     if document is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Document Not Founded."
+            detail="Document not found."
         )
-    #Delete from supabase storage
+
+    # Delete from Supabase Storage
     delete_pdf(document.storage_path)
 
-
-    #Delete from PostgreSql
+    # Delete from PostgreSQL
     db.delete(document)
     db.commit()
 
-
-    return  {
-        "message":"Document deleted successfully"
+    return {
+        "message": "Document deleted successfully."
     }

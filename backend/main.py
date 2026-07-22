@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+
+from app.api.document import router as document_router
 from starlette.middleware.sessions import SessionMiddleware
 from app.core.config import settings
 from app.api.auth import router as auth_router
@@ -16,12 +18,14 @@ app.add_middleware(
     SessionMiddleware,
     secret_key=settings.JWT_SECRET_KEY
 )
-
+#document router
+app.include_router(document_router)
 #include router
 app.include_router(auth_router)
 app.include_router(user_router)
 @app.get("/")
 def root():
+    
     return {
         "message":"welcome to DocuChat AI",
         "debug":settings.APP_VERSION
