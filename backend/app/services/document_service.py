@@ -28,7 +28,7 @@ def create_document(
     # Create document object
     document = Document(
         filename=uploaded_file["filename"],
-        storage_path=uploaded_file["storage_path"],
+        file_path=uploaded_file["storage_path"],
         file_size=uploaded_file["file_size"],
         user_id=current_user.id
     )
@@ -39,24 +39,6 @@ def create_document(
     db.refresh(document)
 
     return document
-
-
-def get_user_documents(
-    db: Session,
-    current_user: User
-):
-    """
-    Return all documents uploaded by the current user.
-    """
-
-    documents = (
-        db.query(Document)
-        .filter(Document.user_id == current_user.id)
-        .order_by(Document.uploaded_at.desc())
-        .all()
-    )
-
-    return documents
 
 
 def delete_document(
@@ -84,7 +66,7 @@ def delete_document(
         )
 
     # Delete from Supabase Storage
-    delete_pdf(document.storage_path)
+    delete_pdf(document.file_path)
 
     # Delete from PostgreSQL
     db.delete(document)

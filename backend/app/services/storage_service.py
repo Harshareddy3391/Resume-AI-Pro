@@ -50,10 +50,10 @@ def upload_pdf(file:UploadFile,user_id:int)->dict:
     )
 
     return {
-        "filename":file.content_type,
-        "storage_path":storage_path,
-        "file_size":len(file_bytes),
-    }
+    "filename": file.filename,
+    "storage_path": storage_path,
+    "file_size": len(file_bytes),
+}
 
 
 def genarate_signed_url(storage_path:str,expires_in:int=3600)->str:
