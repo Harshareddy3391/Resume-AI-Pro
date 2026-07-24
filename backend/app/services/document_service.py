@@ -2,7 +2,8 @@ from fastapi import HTTPException, UploadFile, status
 from sqlalchemy.orm import Session
 
 from app.models.document_model import Document
-from app.models.user_model import User
+from app.models.user_model import User 
+from app.services.pdf_services import extract_text
 
 from app.services.storage_service import (
     upload_pdf,
@@ -21,9 +22,16 @@ def create_document(
 
     # Upload file to Supabase Storage
     uploaded_file = upload_pdf(
-        file=file,
-        user_id=current_user.id
-    )
+    file=file,
+    user_id=current_user.id
+)
+
+    text = extract_text(uploaded_file["file_bytes"]) 
+    print("=" * 50)
+    print("EXTRACTED TEXT")
+    print("=" * 50)
+    print(text)
+    print("=" * 50)
 
     # Create document object
     document = Document(

@@ -53,6 +53,7 @@ def upload_pdf(file:UploadFile,user_id:int)->dict:
     "filename": file.filename,
     "storage_path": storage_path,
     "file_size": len(file_bytes),
+    "file_bytes": file_bytes
 }
 
 
